@@ -1,0 +1,18 @@
+#set($springXhtmlCompliant = true)
+<section class="movies">
+    <h1>Webbvideo</h1>
+    <ul>
+    #foreach($video in $videoList)
+        <li>
+            <a href="http://video.malmo.se/?bctid=${video.id}">
+                <div class="crop">
+                    <img src="${video.thumbnailURL}" alt="">
+                    <div class="play"></div>
+                </div>
+                <h2>${video.name}</h2>
+            </a>
+        </li>
+    #end
+    </ul>
+    <a href="http://video.malmo.se/" class="more">Fler filmer</a>
+</section>

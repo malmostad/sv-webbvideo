@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<portlet-app
+    xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+    version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sv="SiteVision"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
+
+    <portlet>
+        <sv:use-config-window>true</sv:use-config-window>
+        <portlet-name>webbvideo</portlet-name>
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>/WEB-INF/context/webbvideo-portlet.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+            <portlet-mode>config</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Webbvideo</title>
+        </portlet-info>
+        <sv:window>
+            <sv:portlet-mode>config</sv:portlet-mode>
+            <sv:width>480</sv:width>
+            <sv:height>685</sv:height>
+        </sv:window>
+    </portlet>
+</portlet-app>

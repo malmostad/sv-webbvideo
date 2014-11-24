@@ -1,0 +1,33 @@
+#set($springXhtmlCompliant = true)
+<div class="mf-v4" style="margin:20px;">
+    <form action="$renderResponse.createActionURL()&action=save" method="post" class="basic">
+        <p class="help-block">Webbvideoinställningar</p>
+        <div class="form-group">
+            <label for="category" class="control-label">Kategori:</label>
+            <div class="controls">
+                #springFormSingleSelect("form.category" $categories "name='category'")
+            </div>
+        </div>
+
+        <div class="form-group">
+            <span class="no-control-label"></span>
+            <div class="controls">
+                <input type="submit" id="ok" name="_ok" value="OK" class="btn btn-primary"/>
+                <input type="submit" id="cancel" name="_cancel" value="Avbryt" class="btn btn-default"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    function addLink(uri) {
+        var link = document.createElement('link');
+        link.href=uri;
+        link.rel='stylesheet';
+        link.type='text/css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    }
+
+    addLink("//assets.malmo.se/external/v4/malmo.css");
+    addLink("/local-assets-v4/application.css");
+</script>

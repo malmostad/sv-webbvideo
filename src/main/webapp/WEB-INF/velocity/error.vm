@@ -1,0 +1,3 @@
+<div class="error">
+    Ett fel har inträffat: $errorText
+</div>
