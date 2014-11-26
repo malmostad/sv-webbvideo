@@ -1,6 +1,7 @@
 package se.malmo.webbvideo.portlet.request;
 
 import com.googlecode.ehcache.annotations.Cacheable;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,8 +31,12 @@ public class VideoCloudCategoriesRequestService {
         
         CategoryItems entity = restTemplate.getForObject(builder.build(pfBuilder), CategoryItems.class);
         List<Items> items = entity.getItems();
-        Collections.sort(items, Items.COMPARE_BY_NAME);
         
-        return items;
+        if(items != null) {
+            Collections.sort(items, Items.COMPARE_BY_NAME);
+            return items;
+        }
+        
+        return null;
     }
 }
