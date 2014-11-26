@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang.ObjectUtils;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import static se.malmo.webbvideo.portlet.constants.AppConstants.*;
 import static se.malmo.webbvideo.portlet.constants.Tokens.*;
@@ -27,8 +29,22 @@ public class WebbvideoConfigController extends WebbvideoAbstractController {
     public String doConfig(Model model, PortletPreferences prefs, RenderRequest request, RenderResponse response) {
         Map<String,String> categoryMap = getCategories(ACCESS_TOKEN_GENERAL);
         
+        if(categoryMap == null) {
+            model.addAttribute("errorText", "Kategorierna kunde inte hämtas.");
+            return "error";
+        }
+        
         model.addAttribute("categories", categoryMap);
-        model.addAttribute("form", new WebvideoRequestForm());
+        
+        WebvideoRequestForm form = (WebvideoRequestForm)model.asMap().get("form");
+        if (form == null){
+            prefs.getMap();
+            String chosenCategory = prefs.getValue(CATEGORY, "");
+            form = new WebvideoRequestForm();
+            form.setCategory(chosenCategory);
+        }
+        
+        model.addAttribute("form", form);
         model.addAttribute("renderResponse", response);
         
         return "config";
