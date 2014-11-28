@@ -13,5 +13,5 @@
            maxElementsInMemory="1"
            overflowToDisk="false"
            timeToLiveSeconds="3600"
-           eternal="true"/>
+           eternal="false"/>
 </ehcache>
