@@ -11,11 +11,10 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.lang.ObjectUtils;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import static se.malmo.webbvideo.portlet.constants.AppConstants.*;
 import static se.malmo.webbvideo.portlet.constants.Tokens.*;
+import se.malmo.webbvideo.portlet.exception.VideoCloudRequestException;
 
 /**
  *
@@ -27,10 +26,14 @@ public class WebbvideoConfigController extends WebbvideoAbstractController {
 
     @RequestMapping
     public String doConfig(Model model, PortletPreferences prefs, RenderRequest request, RenderResponse response) {
-        Map<String,String> categoryMap = getCategories(ACCESS_TOKEN_GENERAL);
+        Map<String,String> categoryMap;
         
-        if(categoryMap == null) {
-            model.addAttribute("errorText", "Kategorierna kunde inte hämtas.");
+        try {
+            categoryMap = getCategories(ACCESS_TOKEN_GENERAL);
+        }
+        catch(VideoCloudRequestException ex) {
+            Logger.getLogger(WebbvideoRequestController.class.getName()).log(Level.SEVERE, null, ex);
+            model.addAttribute("errorText", ex.getMessage());
             return "error";
         }
         
