@@ -9,6 +9,7 @@ import se.malmo.webbvideo.portlet.request.builder.PlaylistFieldsBuilder;
 import se.malmo.webbvideo.portlet.request.builder.VideoFieldsBuilder;
 
 import java.util.*;
+import se.malmo.webbvideo.portlet.exception.VideoCloudRequestException;
 import se.malmo.webbvideo.portlet.request.VideoCloudCategoriesRequestService;
 import se.malmo.webbvideo.portlet.request.VideoCloudCategoryVideoRequestService;
 
@@ -26,15 +27,16 @@ public abstract class WebbvideoAbstractController {
      * @param token
      * @return  Map with id as key and name as value, 
      *          if no categories could be retrieved null is returned.
+     * @throws se.malmo.webbvideo.portlet.exception.VideoCloudRequestException
      */
-    protected Map<String, String> getCategories(String token) {
+    protected Map<String, String> getCategories(String token) throws VideoCloudRequestException {
         FindAllPlaylistsBuilder queryBuilder = new FindAllPlaylistsBuilder(token);
         PlaylistFieldsBuilder pfb = new PlaylistFieldsBuilder();
         pfb.enableField(PlaylistFieldsBuilder.Field.ID).
             enableField(PlaylistFieldsBuilder.Field.NAME);
         
         Map<String,String> categoryMap = new LinkedHashMap<String, String>();
-
+        
         List<Items> items = categoriesService.doRequest(queryBuilder,pfb);
 
         if(items != null) {
@@ -53,8 +55,9 @@ public abstract class WebbvideoAbstractController {
      * @param token
      * @param numberOfVideos
      * @return List of Videos
+     * @throws se.malmo.webbvideo.portlet.exception.VideoCloudRequestException
      */
-    protected List<Videos> getVideosFromPlaylistId(String id, String token, int numberOfVideos) {
+    protected List<Videos> getVideosFromPlaylistId(String id, String token, int numberOfVideos) throws VideoCloudRequestException {
         FindPlaylistByIdBuilder queryBuilder = new FindPlaylistByIdBuilder(id, token);
         PlaylistFieldsBuilder pfb = new PlaylistFieldsBuilder();
         pfb.enableField(PlaylistFieldsBuilder.Field.ID)
