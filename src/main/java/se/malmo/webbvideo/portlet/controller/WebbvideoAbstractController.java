@@ -75,15 +75,15 @@ public abstract class WebbvideoAbstractController {
         List<Videos> videoList = new ArrayList<Videos>();
         List<Videos> tmpList = items.getVideos();
         int i = 0;
-        Iterator<Videos> iterator = tmpList.iterator();
+        ListIterator<Videos> iterator = tmpList.listIterator();
 
         while(iterator.hasNext() && i < numberOfVideos) {
+            int currentIndex = iterator.nextIndex();
             Videos current = iterator.next();
-
+            
             CustomFields cf = current.getCustomFields();
             boolean showVideo = true;
             if(cf != null) {
-
                 if(cf.getTargetgroup() != null) {
                     String target = cf.getTargetgroup();
                     //Do not show video if the targetgroup is komin.
@@ -92,7 +92,7 @@ public abstract class WebbvideoAbstractController {
             }
 
             if(showVideo) {
-                videoList.add(tmpList.get(i));
+                videoList.add(tmpList.get(currentIndex));
                 i++;
             }
         }
