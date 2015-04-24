@@ -1,7 +1,7 @@
 #set($springXhtmlCompliant = true)
 <section class="movies">
     <h1>Webbvideo</h1>
-    <ul>
+    <ul class="${video_class}">
     #foreach($video in $videoList)
         <li>
             <a href="http://video.malmo.se/?bctid=${video.id}">
