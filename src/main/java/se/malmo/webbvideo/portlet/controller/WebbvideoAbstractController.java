@@ -54,10 +54,11 @@ public abstract class WebbvideoAbstractController {
      * @param id
      * @param token
      * @param numberOfVideos
+     * @param filterArray
      * @return List of Videos
      * @throws se.malmo.webbvideo.portlet.exception.VideoCloudRequestException
      */
-    protected List<Videos> getVideosFromPlaylistId(String id, String token, int numberOfVideos) throws VideoCloudRequestException {
+    protected List<Videos> getVideosFromPlaylistId(String id, String token, int numberOfVideos, String[] filterArray) throws VideoCloudRequestException {
         FindPlaylistByIdBuilder queryBuilder = new FindPlaylistByIdBuilder(id, token);
         PlaylistFieldsBuilder pfb = new PlaylistFieldsBuilder();
         pfb.enableField(PlaylistFieldsBuilder.Field.ID)
@@ -72,25 +73,28 @@ public abstract class WebbvideoAbstractController {
 
         ItemsWithVideos items = videoService.doRequest(queryBuilder,pfb,vfb);
 
+        List<String> filter = Arrays.asList(filterArray);
+        
         List<Videos> videoList = new ArrayList<Videos>();
         List<Videos> tmpList = items.getVideos();
         int i = 0;
         ListIterator<Videos> iterator = tmpList.listIterator();
-
+        
         while(iterator.hasNext() && i < numberOfVideos) {
             int currentIndex = iterator.nextIndex();
             Videos current = iterator.next();
             
             CustomFields cf = current.getCustomFields();
-            boolean showVideo = true;
-            if(cf != null) {
-                if(cf.getTargetgroup() != null) {
-                    String target = cf.getTargetgroup();
-                    //Do not show video if the targetgroup is komin.
-                    showVideo = !target.toLowerCase().contains("komin");
-                }
-            }
 
+            // If customFields is null, create a new object. 
+            // Required in order for the filter to work when cf is null. 
+            if(cf == null) {
+                cf = new CustomFields();
+            }
+            
+            String target = cf.getTargetgroup();
+            boolean showVideo = filter.contains(target.toLowerCase());
+            
             if(showVideo) {
                 videoList.add(tmpList.get(currentIndex));
                 i++;
