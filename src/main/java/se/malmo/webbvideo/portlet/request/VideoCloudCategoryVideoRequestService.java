@@ -23,7 +23,7 @@ public class VideoCloudCategoryVideoRequestService  {
     @Autowired
     RestTemplate restTemplate;
     
-    @Cacheable( cacheName = "categoryVideos")
+    @Cacheable( cacheName = "categoryVideos", cacheNull = false )
     public ItemsWithVideos doRequest(FindPlaylistByIdBuilder builder, PlaylistFieldsBuilder pfBuilder, VideoFieldsBuilder vfBuilder) throws VideoCloudRequestException {
         Logger.getLogger(WebbvideoAbstractController.class.getName()).log(Level.INFO, builder.build(pfBuilder));
         
