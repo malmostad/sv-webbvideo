@@ -14,6 +14,7 @@
 	<context:annotation-config/>
         <ehcache:annotation-driven/>
 	<context:component-scan base-package="se.malmo.webbvideo"/>
+        <context:property-placeholder location="/WEB-INF/properties/webbvideo.properties"/>
   	
         <ehcache:config cache-manager="cacheManager"/>
         
