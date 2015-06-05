@@ -48,17 +48,20 @@ public class WebbvideoRequestController extends WebbvideoAbstractController {
         if(category != null) {
             /* STARTPAGE */
             if(currentPage == sitePage) {
-                List<Videos> generalVideoList;
+                List<Videos> kfVideoList;
                 try {
                     videoList = getVideosFromPlaylistId(category, ACCESS_TOKEN_GENERAL, number_of_videos-1, filter);
-                    generalVideoList = getVideosFromPlaylistId(KF_PLAYLIST_ID, ACCESS_TOKEN_KF, 1, filter);
+                    kfVideoList = getVideosFromPlaylistId(KF_PLAYLIST_ID, ACCESS_TOKEN_KF, 1, filter);
                 } catch (VideoCloudRequestException ex) {
                     Logger.getLogger(WebbvideoRequestController.class.getName()).log(Level.SEVERE, null, ex);
                     model.addAttribute("errorText", ex.getMessage());
                     return "error";
                 }
-                if(!generalVideoList.isEmpty())
-                    videoList.add(generalVideoList.get(0));
+                if(!kfVideoList.isEmpty()) {
+                    Videos kfVideo = kfVideoList.get(0);
+                    kfVideo.setUseExternalVideoLink(true);
+                    videoList.add(kfVideo);
+                }
             }
             /* OTHER PAGES */
             else {

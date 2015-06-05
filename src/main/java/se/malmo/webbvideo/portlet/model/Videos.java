@@ -13,4 +13,5 @@ public class Videos {
     private String shortDescription;
     private String thumbnailURL;
     private CustomFields customFields;
+    private boolean useExternalVideoLink = false;
 }
