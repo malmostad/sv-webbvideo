@@ -166,6 +166,7 @@
                 <version>${maven-war-plugin.version}</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warName>webbvideo</warName>
                     <outputDirectory>${basedir}/target</outputDirectory>
                 </configuration>
             </plugin>
