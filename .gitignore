@@ -1,4 +1,7 @@
 .git
+.classpath
+.project
+.settings
 /target
 /src/main/java/se/malmo/webbvideo/portlet/constants/Tokens.java
 /src/main/java/se/malmo/webbvideo/portlet/controller/TestClass.java
